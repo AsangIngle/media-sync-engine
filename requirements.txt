@@ -1,0 +1,4 @@
+pyttsx3# for text to speach
+#or gTTS
+playsound
+googletrans==4.0.0-rc1
