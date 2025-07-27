@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import os
 
 st.title("Want to add commentary to your video?")
 
@@ -17,8 +18,17 @@ if uploaded_file is not None:
         
         if response.status_code == 200:
             st.success("Processing complete! Downloading result...")
-            with open('output_with_audio.mp4', 'wb') as f:
+
+            # Save the video
+            output_path = 'output_with_audio.mp4'
+            with open(output_path, 'wb') as f:
                 f.write(response.content)
-            st.video('output_with_audio.mp4')
+
+            # Play the video in the app
+            st.video(output_path)
+
+            # Offer download
+            with open(output_path, 'rb') as f:
+                st.download_button("Download video", f, file_name="commentary_video.mp4")
         else:
             st.error(f"Server error {response.status_code}: {response.text}")
